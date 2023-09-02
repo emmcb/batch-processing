@@ -4,7 +4,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='batch-processing',
-      version='1.0',
+      version='1.0.1',
       description='A Python library to make batchable Python scripts.',
       long_description=long_description,
       long_description_content_type='text/markdown',
