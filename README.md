@@ -105,6 +105,26 @@ The `--only` flag allows to select the inputs that match the given patterns, whe
 Inputs can be grouped using the `--group-inputs` argument.
 The inputs that should be grouped together must share a common key, that is computed from the regex provided in the argument.
 
+In case of grouped inputs, the first argument of the batch processing function becomes a list of Path instead of a single Path:
+
+```python
+def parallel_process(inputs: list[Path], output: Path, args):
+
+    # Load the input files, apply some processing, and save to output file here
+```
+
+For example, if we have the following input structure:
+
+- `folder1/`
+    - `input1`
+    - `input2`
+- `folder2/`
+    - `input3`
+    - `input4`
+
+And we want to group the inputs by folder, we can use the regex `--group-inputs "(.+)/"`.
+The `parallel_process` function will be called two times with `inputs = ['folder1/input1', 'folder1/input2']` and `inputs = ['folder2/input3', 'folder2/input4']`.
+
 ### Ouputs
 
 Output can be given using the `-o` flag. Depending on the batch operation mode, the output can either be a folder or a file.

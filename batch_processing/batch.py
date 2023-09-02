@@ -208,8 +208,7 @@ class Batch:
                     inputs = self.__collect_and_filter_inputs(input_list)
 
                     if 'group_inputs' in vars(self.__args) and self.__args.group_inputs:
-                        re_group = re.compile(
-                            self.__args.group_inputs if isinstance(self.__args.group_inputs, str) else r'(.+?)~')
+                        re_group = re.compile(self.__args.group_inputs)
                         inputs = self.__group_inputs(inputs, re_group)
 
         assert len(inputs) > 0, 'Cannot parse any input data'
@@ -316,10 +315,9 @@ class Batch:
         group.add_argument('--tags',
                            nargs='+',
                            help='tag to select a subset of inputs when the later is in dictionary form')
-        group.add_argument('--group-inputs',
-                           nargs='?',
-                           const=True,
-                           help='group inputs according to the given regex, or raw naming convention if none is given')
+        group.add_argument(
+            '--group-inputs',
+            help='group inputs according to the given regex, that identificates a common group key in the filenames')
 
         if self.__output_help != argparse.SUPPRESS:
             group = parser.add_argument_group('batch output arguments')
